@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 git checkout src
 git clean -f src
 sed s/float/double/g -i **/*.java

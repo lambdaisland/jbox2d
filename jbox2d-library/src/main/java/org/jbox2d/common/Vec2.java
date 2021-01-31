@@ -24,11 +24,35 @@
 package org.jbox2d.common;
 
 import java.io.Serializable;
+import clojure.lang.Indexed;
 
 /**
  * A 2D column vector
  */
-public class Vec2 implements Serializable {
+public class Vec2 implements Serializable, Indexed {
+  // Start Clojure
+  public int count() { return 2; }
+
+  public Object nth(int i) {
+    switch(i) {
+    case 0:
+      return x;
+    case 1:
+      return y;
+    default:
+      throw new java.lang.IndexOutOfBoundsException();
+    }
+  }
+
+  public Object nth(int i, Object notFound) {
+    switch(i) {
+    case 0: return x;
+    case 1: return y;
+    default: return notFound;
+    }
+  }
+  // End Clojure
+
   private static final long serialVersionUID = 1L;
 
   public float x, y;

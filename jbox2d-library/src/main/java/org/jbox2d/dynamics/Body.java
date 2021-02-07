@@ -23,6 +23,12 @@
  ******************************************************************************/
 package org.jbox2d.dynamics;
 
+import clojure.lang.IAtom;
+import clojure.lang.IDeref;
+import clojure.lang.IFn;
+import clojure.lang.ISeq;
+import clojure.lang.RT;
+
 import org.jbox2d.collision.broadphase.BroadPhase;
 import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.collision.shapes.Shape;
@@ -37,10 +43,47 @@ import org.jbox2d.dynamics.joints.JointEdge;
 
 /**
  * A rigid body. These are created via World.createBody.
- * 
+ *
  * @author Daniel Murphy
  */
-public class Body {
+public class Body implements IAtom, IDeref {
+  // Start Clojure
+
+  // We implement IAtom to provide a convenient interface to manipulate user
+  // data, but without any concurrency guarantees
+  public Object swap(IFn f) {
+    return m_userData = f.invoke(m_userData);
+  }
+
+  public Object swap(IFn f, Object arg) {
+    return m_userData = f.invoke(m_userData, arg);
+  }
+
+  public Object swap(IFn f, Object arg1, Object arg2) {
+    return m_userData = f.invoke(m_userData, arg1, arg2);
+  }
+
+  public Object swap(IFn f, Object x, Object y, ISeq args) {
+    return m_userData = f.applyTo(RT.listStar(m_userData, x, y, args));
+  }
+
+  public boolean compareAndSet(Object oldv, Object newv) {
+    if (m_userData != null && m_userData.equals(oldv)) {
+      m_userData = newv;
+      return true;
+    }
+    return false;
+  }
+
+  public Object reset(Object newval) {
+    return m_userData = newval;
+  }
+
+  public Object deref() {
+    return m_userData;
+  }
+  // End Clojure
+
   public static final int e_islandFlag = 0x0001;
   public static final int e_awakeFlag = 0x0002;
   public static final int e_autoSleepFlag = 0x0004;

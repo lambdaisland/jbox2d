@@ -23,6 +23,12 @@
  ******************************************************************************/
 package org.jbox2d.dynamics;
 
+import clojure.lang.IAtom;
+import clojure.lang.IDeref;
+import clojure.lang.IFn;
+import clojure.lang.ISeq;
+import clojure.lang.RT;
+
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.RayCastInput;
 import org.jbox2d.collision.RayCastOutput;
@@ -45,7 +51,43 @@ import org.jbox2d.dynamics.contacts.ContactEdge;
  * 
  * @author daniel
  */
-public class Fixture {
+public class Fixture implements IAtom, IDeref {
+  // Start Clojure
+
+  // We implement IAtom to provide a convenient interface to manipulate user
+  // data, but without any concurrency guarantees
+  public Object swap(IFn f) {
+    return m_userData = f.invoke(m_userData);
+  }
+
+  public Object swap(IFn f, Object arg) {
+    return m_userData = f.invoke(m_userData, arg);
+  }
+
+  public Object swap(IFn f, Object arg1, Object arg2) {
+    return m_userData = f.invoke(m_userData, arg1, arg2);
+  }
+
+  public Object swap(IFn f, Object x, Object y, ISeq args) {
+    return m_userData = f.applyTo(RT.listStar(m_userData, x, y, args));
+  }
+
+  public boolean compareAndSet(Object oldv, Object newv) {
+    if (m_userData != null && m_userData.equals(oldv)) {
+      m_userData = newv;
+      return true;
+    }
+    return false;
+  }
+
+  public Object reset(Object newval) {
+    return m_userData = newval;
+  }
+
+  public Object deref() {
+    return m_userData;
+  }
+  // End Clojure
 
   public float m_density;
 

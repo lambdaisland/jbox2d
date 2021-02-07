@@ -42,7 +42,7 @@ import org.jbox2d.pooling.IWorldPool;
  *
  * @author Daniel Murphy
  */
-public abstract class Joint implement IAtom, IDeref {
+public abstract class Joint implements IAtom, IDeref {
   // Start Clojure
 
   // We implement IAtom to provide a convenient interface to manipulate user

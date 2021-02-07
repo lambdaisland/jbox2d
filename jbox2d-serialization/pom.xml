@@ -7,7 +7,7 @@
   <name>jbox2d-serialization</name>
   <description>Serialization library for jbox2d</description>
   <url>http://code.google.com/p/jbox2d/</url>
-  <version>2.3.1.751</version>
+  <version>2.3.1.752</version>
 
   <build>
     <plugins>
@@ -100,7 +100,7 @@
     <dependency>
       <groupId>lambdaisland</groupId>
       <artifactId>jbox2d-library</artifactId>
-      <version>2.3.1.751</version>
+      <version>2.3.1.752</version>
     </dependency>
     <dependency>
       <groupId>com.google.protobuf</groupId>
@@ -108,4 +108,19 @@
       <version>3.3.1</version>
     </dependency>
   </dependencies>
+  
+
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <url>https://repo.clojars.org/</url>
+    </repository>
+  </repositories>
+  <distributionManagement>
+    <repository>
+      <id>clojars</id>
+      <name>Clojars repository</name>
+      <url>https://clojars.org/repo</url>
+    </repository>
+  </distributionManagement>
 </project>

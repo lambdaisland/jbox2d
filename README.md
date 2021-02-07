@@ -1,5 +1,32 @@
-jbox2d
-======
+# lambdaisland/jbox2d
+
+This is a fork of the excellent jbox2d physics engine, meant as the basis for
+cljbox2d, a Clojure API to jbox2d.
+
+- Use `double`s instead of `float`s. It's a 64bit world now, and Clojure
+  generally sticks to doubles as well.
+- Implement some Clojure interfaces for nicer interop
+- Upgrade dependencies where possible
+
+Implemented interfaces:
+
+- `Vec2` implements `IIndexed`, so you can destructure them 
+- `Body`, `Fixture`, and `Joint` all implement `IAtom` and `IDeref`, to provide
+  easy access to the user data. Note that even though this implement `IAtom`,
+  calling `swap!` on these objects does not provide any concurrency guarantees.
+
+Not all sub-projects are built, we currently release these libraries to Clojars:
+
+- `lambdaisland/jbox2d`
+- `lambdaisland/jbox2d-serialization`
+- `lambdaisland/jbox2d-testbed`
+- `lambdaisland/jbox2d-testbed-jogl`
+
+For versions we stick to the scheme `2.3.1-<number of git commits>`.
+
+------------------------------
+
+# Original jbox2d README
 
 **Please see the [project's BountySource page](https://www.bountysource.com/teams/jbox2d) to vote on issues that matter to you.**  Commenting/voting on issues helps me prioritize the small amount of time I have to maintain this library :)
 

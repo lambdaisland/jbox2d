@@ -2,4 +2,4 @@
 
 ./float2double.sh
 ./update_version.sh
-mvn deploy
+mvn deploy -Dmaven.test.skip=true
